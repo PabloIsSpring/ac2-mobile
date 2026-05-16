@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ac2mobile</string>
+    <string-array name="tipos">
+        <item>Filme</item>
+        <item>Serie</item>
+        <item>Documentario</item>
+        <item>Novela</item>
+    </string-array>
+    <string-array name="genero">
+        <item>Terror</item>
+        <item>Historico</item>
+        <item>Ação</item>
+        <item>Suspese</item>
+    </string-array>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/txtNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtTipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipo" />
+
+    <TextView
+        android:id="@+id/txtGenero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gênero" />
+
+    <TextView
+        android:id="@+id/txtAnoLancamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ano de lançamento" />
+
+    <TextView
+        android:id="@+id/txtNotaPessoal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nota pessoal" />
+
+    <TextView
+        android:id="@+id/txtAssistiu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Já assistiu?" />
+
+</LinearLayout>
