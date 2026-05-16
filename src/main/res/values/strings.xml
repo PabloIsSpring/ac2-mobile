@@ -9,6 +9,8 @@
     <string-array name="genero">
         <item>Terror</item>
         <item>Historico</item>
+        <item>Animacao</item>
+        <item>Aventura</item>
         <item>Ação</item>
         <item>Suspese</item>
     </string-array>

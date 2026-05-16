@@ -47,7 +47,7 @@ public class FilmeAdapter extends RecyclerView.Adapter<FilmeAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int pos) {
         Filme f = filmes.get(pos);
         holder.txt1.setText(f.getNome());
-        holder.txt2.setText(f.getTipo()+" - "+f.getGenero()+" - "+f.getAnoLancamento()+" - "+f.getNotaPessoal());
+        holder.txt2.setText(f.getTipo()+" - "+f.getGenero()+" - "+f.getAnoLancamento()+" - "+f.getNotaPessoal()+" - "+f.getJaAssistiu());
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -74,25 +74,26 @@ public class FilmeAdapter extends RecyclerView.Adapter<FilmeAdapter.ViewHolder> 
 
     private void deletarProduto(String idDocumento, int position, View view) {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            String uid = user.getUid(); // se quiser usar
-
-            FirebaseFirestore.getInstance().collection("filmes")
-                    .document(idDocumento)
-                    .delete()
-                    .addOnSuccessListener(aVoid -> {
-                        filmes.remove(position);
-                        notifyItemRemoved(position);
-                        Toast.makeText(view.getContext(), "Produto deletado!", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(view.getContext(), "Erro ao deletar", Toast.LENGTH_SHORT).show();
-                    });
-        } else {
-            Toast.makeText(view.getContext(), "Você precisa estar logado para realizar essa ação", Toast.LENGTH_SHORT).show();
+        if (idDocumento == null || idDocumento.isEmpty()) {
+            Toast.makeText(view.getContext(), "ID do filme inválido", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        FirebaseFirestore.getInstance().collection("filmes")
+                .document(idDocumento)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    filmes.remove(position);
+                    notifyItemRemoved(position);
+                    Toast.makeText(view.getContext(), "Filme deletado!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(
+                            view.getContext(),
+                            "Erro ao deletar: " + e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                });
     }
 
 

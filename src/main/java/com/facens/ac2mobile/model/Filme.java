@@ -8,9 +8,9 @@ public class Filme {
     private String genero;
     private int anoLancamento;
     private int notaPessoal;
-    private boolean jaAssistiu;
+    private String jaAssistiu;
 
-    public Filme(String id, String nome, String tipo, String genero, int anoLancamento, int notaPessoal, boolean jaAssistiu) {
+    public Filme(String id, String nome, String tipo, String genero, int anoLancamento, int notaPessoal, String jaAssistiu) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;
@@ -18,6 +18,10 @@ public class Filme {
         this.anoLancamento = anoLancamento;
         this.notaPessoal = notaPessoal;
         this.jaAssistiu = jaAssistiu;
+    }
+
+    public Filme () {
+
     }
 
     public String getId() {
@@ -68,11 +72,11 @@ public class Filme {
         this.notaPessoal = notaPessoal;
     }
 
-    public boolean isJaAssistiu() {
-        return jaAssistiu;
+    public void setJaAssistiu(String jaAssistiu) {
+        this.jaAssistiu = jaAssistiu;
     }
 
-    public void setJaAssistiu(boolean jaAssistiu) {
-        this.jaAssistiu = jaAssistiu;
+    public String getJaAssistiu() {
+        return this.jaAssistiu;
     }
 }

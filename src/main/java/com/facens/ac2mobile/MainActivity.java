@@ -77,12 +77,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void salvarFilme () {
         String nome = edtNome.getText().toString();
-        int anoLanc = Integer.parseInt(edtAnoLanc.getText().toString());
-        int notaPes = Integer.parseInt(edtNotaPes.getText().toString());
+        String anoTexto = edtAnoLanc.getText().toString();
+        String notaTexto = edtNotaPes.getText().toString();
         String genero = spnGenero.getSelectedItem().toString();
         String tipo = spnTipo.getSelectedItem().toString();
-        boolean assistiu = jaAssistiu.isSelected();
+        String assistiu = validaCheckBox(jaAssistiu.isChecked());
 
+        if(nome.isEmpty() || genero.isEmpty() || tipo.isEmpty() ||
+                anoTexto.isEmpty() || notaTexto.isEmpty()) {
+            Toast.makeText(this, "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int anoLanc;
+        int notaPes;
+
+        try {
+            anoLanc = Integer.parseInt(anoTexto);
+            notaPes = Integer.parseInt(notaTexto);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Ano e nota precisam ser números.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(validarNotaPessoa(notaPes)){
+            Toast.makeText(this, "Insira uma nota válida", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(filmeEditando == null) {
             Filme f = new Filme(null, nome, tipo, genero, anoLanc, notaPes, assistiu);
 
@@ -108,15 +129,17 @@ public class MainActivity extends AppCompatActivity {
                         carregarProdutos();
                     });
         }
+        carregarProdutos();
+        limparCampos();
     }
 
     private void limparCampos() {
         edtNome.setText("");
-        spnTipo.setSelection(1);
-        spnGenero.setSelection(1);
+        spnTipo.setSelection(0);
+        spnGenero.setSelection(0);
         edtNotaPes.setText("");
         edtAnoLanc.setText("");
-        jaAssistiu.setActivated(false);
+        jaAssistiu.setChecked(false);
         filmeEditando = null;
         ((Button) findViewById(R.id.btnSalvar)).setText("Salvar Produto");
     }
@@ -136,18 +159,24 @@ public class MainActivity extends AppCompatActivity {
 
         filmeAdapter.setOnItemClickListener(f -> {
             edtNome.setText(f.getNome());
-            edtAnoLanc.setText(f.getAnoLancamento());
-            edtNotaPes.setText(f.getNotaPessoal());
+            edtAnoLanc.setText(String.valueOf(f.getAnoLancamento()));
+            edtNotaPes.setText(String.valueOf(f.getNotaPessoal()));
 
             spnGenero.setSelection(buscarItemPorPosicao(spnGenero, f.getGenero()));
             spnTipo.setSelection(buscarItemPorPosicao(spnTipo, f.getTipo()));
 
-            jaAssistiu.setActivated(f.isJaAssistiu());
-
+            jaAssistiu.setChecked(validaCheckBox(f.getJaAssistiu()));
             filmeEditando = f;
             ((Button) findViewById(R.id.btnSalvar)).setText("Atualizar Produto");
         });
 
+    }
+
+    private boolean validarNotaPessoa(int nota) {
+        if(nota > 5){
+            return true;
+        }
+        return false;
     }
 
     private int buscarItemPorPosicao(Spinner spin, String val) {
@@ -159,6 +188,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return 0;
+    }
+
+    private String validaCheckBox(boolean check) {
+        if(check){
+            return "Assistiu";
+        }
+        return "Nao assistiu";
+    }
+
+    private boolean validaCheckBox(String check) {
+        if(check.equalsIgnoreCase("Sim")){
+            return true;
+        }
+        return false;
     }
 
 }
